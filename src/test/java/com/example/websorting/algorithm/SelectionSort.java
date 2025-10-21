@@ -1,28 +1,34 @@
-package com.example.websorting.algorithm;
 
+
+        package com.example.websorting.algorithm;
+import com.example.assignment.Algorithms.SortingAlgorithm;
 import org.springframework.stereotype.Component;
 
-@Component("selection")
-public class SelectionSort implements SortingAlgorithm {
+@Component
+public class SelectionSort extends SortingAlgorithm {
+
     @Override
-    public long sort(int[] arr) {
-        long comparisons = 0;
-        int n = arr.length;
+    public int[] sort(int[] array) {
+        int[] sortedArray = array.clone();
+        int n = sortedArray.length;
+
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < n; j++) {
-                comparisons++;
-                if (arr[j] < arr[minIndex]) {
+                if (sortedArray[j] < sortedArray[minIndex]) {
                     minIndex = j;
                 }
             }
-            int temp = arr[minIndex];
-            arr[minIndex] = arr[i];
-            arr[i] = temp;
+
+            int temp = sortedArray[minIndex];
+            sortedArray[minIndex] = sortedArray[i];
+            sortedArray[i] = temp;
         }
-        return comparisons;
+        return sortedArray;
     }
 
     @Override
-    public String name() { return "selection"; }
+    public String getAlgorithmName() {
+        return "Selection Sort";
+    }
 }

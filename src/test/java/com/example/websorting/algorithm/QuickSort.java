@@ -1,44 +1,51 @@
-package com.example.websorting.algorithm;
 
+
+        package com.example.websorting.algorithm;
+import com.example.assignment.Algorithms.SortingAlgorithm;
 import org.springframework.stereotype.Component;
 
-@Component("quick")
-public class QuickSort implements SortingAlgorithm {
-    private long comparisons;
+@Component
+public class QuickSort extends SortingAlgorithm {
 
     @Override
-    public long sort(int[] arr) {
-        comparisons = 0;
-        quickSort(arr, 0, arr.length - 1);
-        return comparisons;
+    public int[] sort(int[] array) {
+        int[] sortedArray = array.clone();
+        quickSort(sortedArray, 0, sortedArray.length - 1);
+        return sortedArray;
     }
 
-    private void quickSort(int[] arr, int low, int high) {
+    private void quickSort(int[] array, int low, int high) {
         if (low < high) {
-            int p = partition(arr, low, high);
-            quickSort(arr, low, p - 1);
-            quickSort(arr, p + 1, high);
+            int pi = partition(array, low, high);
+            quickSort(array, low, pi - 1);
+            quickSort(array, pi + 1, high);
         }
     }
 
-    private int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1;
+    private int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = (low - 1);
+
         for (int j = low; j < high; j++) {
-            comparisons++;
-            if (arr[j] <= pivot) {
+            if (array[j] < pivot) {
                 i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+                // Swap array[i] and array[j]
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
             }
         }
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
+
+        // Swap array[i+1] and array[high] (or pivot)
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
         return i + 1;
     }
 
     @Override
-    public String name() { return "quick"; }
+    public String getAlgorithmName() {
+        return "Quick Sort";
+    }
 }
